@@ -77,6 +77,12 @@
   int car_altitude;
   int car_gpslock;
   int car_stale_gps;
+  NSString* car_drive_mode;
+  double car_batt_power;
+  double car_energy_used;
+  double car_energy_recovered;
+  double car_inverter_motor_power;
+  double car_inverter_eff;
   int car_soc;
   NSString* car_units;
   int car_linevoltage;
@@ -181,6 +187,12 @@
 @property (assign) int car_altitude;
 @property (assign) int car_gpslock;
 @property (assign) int car_stale_gps;
+@property (strong, nonatomic) NSString* car_drive_mode;
+@property (assign) double car_batt_power;
+@property (assign) double car_energy_used;
+@property (assign) double car_energy_recovered;
+@property (assign) double car_inverter_motor_power;
+@property (assign) double car_inverter_eff;
 
 @property (assign) int car_soc;
 @property (strong, nonatomic) NSString* car_units;

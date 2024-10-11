@@ -40,6 +40,12 @@
 @synthesize car_altitude;
 @synthesize car_gpslock;
 @synthesize car_stale_gps;
+@synthesize car_drive_mode;
+@synthesize car_batt_power;
+@synthesize car_energy_used;
+@synthesize car_energy_recovered;
+@synthesize car_inverter_motor_power;
+@synthesize car_inverter_eff;
 
 @synthesize car_soc;
 @synthesize car_units;
@@ -549,6 +555,12 @@
   car_altitude = 0;
   car_gpslock = 0;
   car_stale_gps = -1;
+  car_drive_mode = @"";
+  car_batt_power = 0;
+  car_energy_used = 0;
+  car_energy_recovered = 0;
+  car_inverter_motor_power = 0;
+  car_inverter_eff = 0;
   
   car_soc = 0;
   car_units = @"";
@@ -727,7 +739,7 @@
         }
       if([lparts count]>=31)
         {
-        car_minutestorangelimit = [[lparts objectAtIndex:20] intValue];
+        car_minutestorangelimit = [[lparts objectAtIndex:27] intValue];
         car_minutestosoclimit = [[lparts objectAtIndex:28] intValue];
         car_chargetype = [[lparts objectAtIndex:30] intValue];
         }
@@ -755,6 +767,16 @@
         car_gpslock = [[lparts objectAtIndex:4] intValue];
         car_stale_gps = [[lparts objectAtIndex:5] intValue];
         }
+        if ([lparts count]>=14)
+          {
+            car_drive_mode = [lparts objectAtIndex:8];
+            car_batt_power = [[lparts objectAtIndex:9] doubleValue];
+            car_energy_used = [[lparts objectAtIndex:10] doubleValue];
+            car_energy_recovered = [[lparts objectAtIndex:11] doubleValue];
+            car_inverter_motor_power = [[lparts objectAtIndex:12] doubleValue];
+            car_inverter_eff = [[lparts objectAtIndex:13] doubleValue];
+            NSLog(@"Processed L: Drive Mode:%@ Batt Power:%0.1f Energy Used:%0.1f Recovered:%0.1f Motor Power:%0.1f Inv Eff:%0.1f", car_drive_mode, car_batt_power, car_energy_used, car_energy_recovered, car_inverter_motor_power, car_inverter_eff);
+          }
       if (car_ambient_weather < 0)
         {
         // We may need to launch an async request to get the weather at the car's location
