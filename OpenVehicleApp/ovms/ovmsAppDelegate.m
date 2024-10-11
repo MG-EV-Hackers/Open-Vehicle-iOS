@@ -775,7 +775,7 @@
             car_energy_recovered = [[lparts objectAtIndex:11] doubleValue];
             car_inverter_motor_power = [[lparts objectAtIndex:12] doubleValue];
             car_inverter_eff = [[lparts objectAtIndex:13] doubleValue];
-            NSLog(@"Processed L: Drive Mode:%@ Batt Power:%0.1f Energy Used:%0.1f Recovered:%0.1f Motor Power:%0.1f Inv Eff:%0.1f", car_drive_mode, car_batt_power, car_energy_used, car_energy_recovered, car_inverter_motor_power, car_inverter_eff);
+            NSLog(@"L: Drive Mode:%@ Batt Power:%0.3f Energy Used:%0.3f Recovered:%0.3f Motor Power:%0.2f Inv Eff:%0.2f", car_drive_mode, car_batt_power, car_energy_used, car_energy_recovered, car_inverter_motor_power, car_inverter_eff);
           }
       if (car_ambient_weather < 0)
         {
