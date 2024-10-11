@@ -30,6 +30,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *m_car_charge_remaining_time;
 @property (strong, nonatomic) IBOutlet UILabel *m_car_chargekwh;
 @property (strong, nonatomic) IBOutlet UIImageView *m_charger_plug;
+@property (strong, nonatomic) IBOutlet UILabel *m_car_charge_etr_range;
+@property (strong, nonatomic) IBOutlet UILabel *m_car_charge_etr_soc;
 @property (strong, nonatomic) IBOutlet UISlider *m_charger_slider;
 @property (strong, nonatomic) IBOutlet UIButton *m_battery_button;
 

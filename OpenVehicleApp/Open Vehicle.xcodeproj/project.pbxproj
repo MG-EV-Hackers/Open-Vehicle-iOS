@@ -2850,7 +2850,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 20210922;
-				DEVELOPMENT_TEAM = 5NP6692GUS;
+				DEVELOPMENT_TEAM = KNRM248MZK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2870,7 +2870,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.openvehicles.ovms;
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.prhenterprises.ovms;
 				PRODUCT_NAME = "Open Vehicle";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64 x86_64";
@@ -2939,7 +2939,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 20210922;
-				DEVELOPMENT_TEAM = 5NP6692GUS;
+				DEVELOPMENT_TEAM = KNRM248MZK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2959,7 +2959,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.openvehicles.ovms;
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.prhenterprises.ovms;
 				PRODUCT_NAME = "Open Vehicle";
 				PROVISIONING_PROFILE = "";
 				VALID_ARCHS = "armv7 armv7s arm64 x86_64";
@@ -3034,7 +3034,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 20210922;
-				DEVELOPMENT_TEAM = 5NP6692GUS;
+				DEVELOPMENT_TEAM = KNRM248MZK;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3054,7 +3054,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.openvehicles.ovms;
+				PRODUCT_BUNDLE_IDENTIFIER = au.com.prhenterprises.ovms;
 				PRODUCT_NAME = "Open Vehicle";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
