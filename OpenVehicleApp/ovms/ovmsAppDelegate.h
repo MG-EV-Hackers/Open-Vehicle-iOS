@@ -15,6 +15,7 @@
 #import "crypto_hmac.h"
 #import "crypto_rc4.h"
 #import "ovmsMessage.h"
+#import <WatchConnectivity/WatchConnectivity.h>
 
 #define TOKEN_SIZE 22
 
@@ -38,7 +39,7 @@
 - (void)commandResult:(NSArray*)result;
 @end
 
-@interface ovmsAppDelegate : UIResponder <UIApplicationDelegate>
+@interface ovmsAppDelegate : UIResponder <UIApplicationDelegate, WCSessionDelegate>
 {
   GCDAsyncSocket *asyncSocket;
   NSTimer *tim;
@@ -162,6 +163,7 @@
 }
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) WCSession *session;
 
 @property (strong, nonatomic) NSString* sel_car;
 @property (strong, nonatomic) NSString* sel_label;

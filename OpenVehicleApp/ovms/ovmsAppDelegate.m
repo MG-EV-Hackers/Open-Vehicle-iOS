@@ -130,6 +130,13 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  if ([WCSession isSupported]) {
+    self.session = [WCSession defaultSession];
+    self.session.delegate = self;
+    [self.session activateSession];
+    
+    NSLog(@"WCSession Started");
+  }
   // Set the application defaults
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSDictionary *appDefaults = [NSDictionary
@@ -1689,5 +1696,59 @@ else
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[mapURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]]];
 }
 
+- (void) session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *,id> *)message replyHandler:(void (^)(NSDictionary<NSString *,id> * _Nonnull))replyHandler {
+  dispatch_async(dispatch_get_main_queue(), ^{
+    NSLog(@"didReceiveMessage called in apple watch");
+    NSString *received = [message objectForKey:@"msg"];
+    if ([received  isEqualToString: @"charge"]) {
+      NSDictionary *data = @{@"soc":[NSNumber numberWithInt:self.car_soc],
+                             @"chargingstate":self.car_chargestate,
+                             @"durationfull":[NSNumber numberWithInt:self.car_minutestofull],
+                             @"limitsoc":[NSNumber numberWithInt:self.car_soclimit],
+                             @"limitrange":[NSNumber numberWithInt:self.car_rangelimit],
+                             @"car_parktime":[NSNumber numberWithInt:self.car_parktime],
+                             @"durationsoc":[NSNumber numberWithInt:self.car_minutestosoclimit],
+                             @"durationrange":[NSNumber numberWithInt:self.car_minutestorangelimit],
+                             @"chargeduration":[NSNumber numberWithInt:self.car_chargeduration],
+                             @"chargekwh":[NSNumber numberWithInt:self.car_chargekwh],
+                             @"trip":[NSNumber numberWithInt:self.car_minutestofull],
+                             @"gpsspeed":[NSNumber numberWithInt:self.car_speed],
+                             @"odometer":[NSNumber numberWithInt:self.car_odometer],
+                             //@"power":[NSNumber numberWithInt:self.car_minutestofull],
+                             @"current":[NSNumber numberWithInt:self.car_chargecurrent],
+                             @"linevoltage":[NSNumber numberWithInt:self.car_linevoltage],
+                             @"power":[NSNumber numberWithDouble:self.car_linevoltage * self.car_chargecurrent / 1000.0],
+                             @"lowvoltage":[NSNumber numberWithInt:self.car_aux_battery_voltage],
+                             @"estrange":[NSNumber numberWithInt:self.car_estimatedrange],
+                             @"car_tpem":[NSNumber numberWithInt:self.car_tpem],
+                             @"car_tmotor":[NSNumber numberWithInt:self.car_tmotor],
+                             @"car_tbattery":[NSNumber numberWithInt:self.car_tbattery],
+                             @"car_trip":[NSNumber numberWithInt:self.car_trip],
+                             @"doors1":[NSNumber numberWithInt:self.car_doors1],
+                             @"units": self.car_units
+      };
+      replyHandler(@{@"reply":data});
+//    } else if ([received  isEqualToString: @"driving"]) {
+//      replyHandler(@{@"reply":@"Asked for driving"});
+//    } else if ([received  isEqualToString: @"parked"]) {
+//      replyHandler(@{@"reply":@"Asked for parked"});
+    } else {
+      replyHandler(@{@"reply":@"Not Found"});
+    }
+  });
+}
+
+- (void)sessionDidBecomeInactive:(WCSession *)session {
+  NSLog(@"WCSession Became Inactive");
+}
+
+- (void)sessionDidDeactivate:(WCSession *)session {
+  NSLog(@"WCSession Deactivated");
+  [self.session activateSession];
+}
+
+- (void)session:(nonnull WCSession *)session activationDidCompleteWithState:(WCSessionActivationState)activationState error:(nullable NSError *)error {
+  NSLog(@"WCSession Activation Error");
+}
 
 @end
