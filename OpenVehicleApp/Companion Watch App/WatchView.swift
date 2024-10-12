@@ -88,26 +88,33 @@ struct WatchView: View {
               .opacity(0.9))
         switch carMode {
         case .charging:
-          SubView(Text1: "Full", Data1: timeConvert(time: String(metricVal.charge_etr_full)),
-                  Text2: "\(metricVal.charge_limit_soc)%", Data2: timeConvert(time: String(metricVal.charge_etr_soc)),
-                  Text3: "\(metricVal.charge_limit_range)K", Data3: timeConvert(time: String(metricVal.charge_etr_range)),
+          let text1 = metricVal.charge_etr_full > 0 ? "\(metricVal.charge_etr_full)%" : ""
+          let data1 = metricVal.charge_etr_full > 0 ? timeConvert(time: String(metricVal.charge_etr_full)) : ""
+          let text2 = metricVal.charge_limit_soc > 0 ? "\(metricVal.charge_limit_soc)%" : ""
+          let data2 = metricVal.charge_limit_soc > 0 ? timeConvert(time: String(metricVal.charge_etr_soc)) : ""
+          let text3 = metricVal.charge_limit_range > 0 ? "\(metricVal.charge_limit_range)%" : ""
+          let data3 = metricVal.charge_limit_range > 0 ? timeConvert(time: String(metricVal.charge_limit_range)) : ""
+          SubView(
+                  Text1: text1, Data1: data1,
+                  Text2: text2, Data2: data2,
+                  Text3: text3, Data3: data3,
                   Text4: "Dur", Data4: timeConvert(time: "\((Int(metricVal.chargeduration))/60)"),
-                  Text5: "kWh", Data5: String(format:"%0.1f",(Float(metricVal.chargekwh))),
+                  Text5: "kWh", Data5: String(format:"%0.2f",(Float(metricVal.chargekwh))),
                   Text6: "@ kW", Data6: String(format:"%0.1f",(Float(metricVal.power))))
         case .driving:
           SubView(Text1: "PWR", Data1: String(format:"%0.1f",(Float(metricVal.power))),
                   Text2: "ODO", Data2: String(metricVal.odometer),
-                  Text3: "Cons", Data3: "0.00", //String(format:"%0.2f",(Float(metricVal.consumption) ?? 0.00)),
-                  Text4: "Time", Data4: "0.00", //String(format:"%0.2f",(Float(metricVal.drivetime) ?? 0.00)),
-                  Text5: "Trip", Data5: "0.00", //String(format:"%0.1f°",(Float(metricVal.tripmeter))),
+                  Text3: "Used", Data3: String(format:"%0.2f",(Float(metricVal.energyused))),
+                  Text4: "Rxed", Data4: String(format:"%0.2f",(Float(metricVal.energyrecd))),
+                  Text5: "Trip", Data5: String(format:"%0.1f",(Float(metricVal.tripmeter)/10)),
                   Text6: "12V", Data6: "\(metricVal.vehicle12v)V")
         default:
-          SubView(Text1: "Motor", Data1: "\(metricVal.temperature_motor)", //"\(metricValVal.temperature_motor)°",
-                  Text2: "Batt", Data2: "\(metricVal.temperature_battery)", //"\(metricValVal.temperature_battery)°",
-                  Text3: "PEM", Data3: "\(metricVal.temperature_pem)", //"\(metricValVal.temperature_pem)°",
-                    Text4: "Amb", Data4: "\(0)", //"\(metricValVal.temperature_ambient)°",
-                    Text5: "Cabin", Data5: "\(0)", //"\(metricValVal.temperature_cabin)°",
-                    Text6: "12V", Data6: "\(metricVal.vehicle12v)V")
+          SubView(Text1: "Motor", Data1: "\(metricVal.temperature_motor)°",
+                  Text2: "Batt", Data2: "\(metricVal.temperature_battery)°",
+                  Text3: "PEM", Data3: "\(metricVal.temperature_pem)°",
+                  Text4: "Amb", Data4: "\(metricVal.temperature_ambient)°",
+                  Text5: "Parked", Data5: String(format:"%d:%02d",metricVal.parktime/3600,(metricVal.parktime%3600)/60),
+                  Text6: "12V", Data6: "\(metricVal.vehicle12v)V")
         }
       }
     }

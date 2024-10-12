@@ -32,7 +32,7 @@ struct WatchMetric {
   var charge_etr_range: Double
   var charge_limit_soc: Double
   var charge_limit_range: Double
-  var parktime: Double
+  var parktime: Int
   var units: String
   var chargeduration: Double
   var chargekwh: Double
@@ -52,7 +52,7 @@ struct WatchMetric {
   var doors: Doors
   var odometer: Int
   
-  static let initial = WatchMetric(charging: false, caron: false, chargestate: "", estimated_range: 0.0, charge_etr_full: 0.0, charge_etr_soc: 0.0, charge_etr_range: 0.0, charge_limit_soc: 0.0, charge_limit_range: 0.0, parktime: 0.0, units: "K", chargeduration: 0.0, chargekwh: 0.0, chargecurrent: 0.0, linevoltage: 0.0, power: 0.0, tripmeter: 0.0, energyrecd: 0.0, energyused: 0.0, temperature_motor: 0.0, temperature_battery: 0.0, temperature_pem: 0.0, temperature_ambient: 0.0, voltage_cabin: 0.0, vehicle12v: 0.0, carsoc: 0.0, doors: Doors(rawValue: 0), odometer: 0)
+  static let initial = WatchMetric(charging: false, caron: false, chargestate: "", estimated_range: 0.0, charge_etr_full: 0.0, charge_etr_soc: 0.0, charge_etr_range: 0.0, charge_limit_soc: 0.0, charge_limit_range: 0.0, parktime: 0, units: "K", chargeduration: 0.0, chargekwh: 0.0, chargecurrent: 0.0, linevoltage: 0.0, power: 0.0, tripmeter: 0.0, energyrecd: 0.0, energyused: 0.0, temperature_motor: 0.0, temperature_battery: 0.0, temperature_pem: 0.0, temperature_ambient: 0.0, voltage_cabin: 0.0, vehicle12v: 0.0, carsoc: 0.0, doors: Doors(rawValue: 0), odometer: 0)
     
 }
 
@@ -111,21 +111,20 @@ extension WatchModel: WCSessionDelegate {
           self.metricVal.charge_etr_range = reply["durationrange"] as! Double
           self.metricVal.charge_limit_soc = reply["limitsoc"] as! Double
           self.metricVal.charge_limit_range = reply["limitrange"] as! Double
-          self.metricVal.parktime = reply["car_parktime"] as! Double
+          self.metricVal.parktime = reply["car_parktime"] as! Int
           self.metricVal.units = reply["units"] as! String
           self.metricVal.chargeduration = reply["chargeduration"] as! Double
           self.metricVal.chargekwh = reply["chargekwh"] as! Double
           self.metricVal.chargecurrent = reply["current"] as! Double
           self.metricVal.linevoltage = reply["linevoltage"] as! Double
-          self.metricVal.power = reply["power"] as! Double
+          self.metricVal.power = reply["car_batt_power"] as! Double
           self.metricVal.tripmeter = reply["car_trip"] as! Double
-          //self.metricVal.energyrecd = reply["soc"] as! Double
-          //self.metricVal.energyused = reply["soc"] as! Double
+          self.metricVal.energyused = reply["car_energy_used"] as! Double
+          self.metricVal.energyrecd = reply["car_energy_recovered"] as! Double
           self.metricVal.temperature_motor = reply["car_tmotor"] as! Double
           self.metricVal.temperature_battery = reply["car_tbattery"] as! Double
           self.metricVal.temperature_pem = reply["car_tpem"] as! Double
-          self.metricVal.temperature_ambient = reply["soc"] as! Double
-          self.metricVal.voltage_cabin = reply["soc"] as! Double
+          self.metricVal.temperature_ambient = reply["car_tambient"] as! Double
           self.metricVal.vehicle12v = reply["lowvoltage"] as! Double
           let doors1 = reply["doors1"] as! Int
           self.metricVal.doors = Doors(rawValue: doors1)
