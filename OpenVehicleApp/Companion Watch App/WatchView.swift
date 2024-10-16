@@ -41,7 +41,6 @@ struct WatchView: View {
 
   var body: some View {
     let metricVal = metrics.metricVal
-    let socDouble = 50.0 //Double(metric.linevoltage) ?? 0.0
     let carMode = metrics.carMode
     let phoneImage = metrics.sessionAvailable ? "iphone.gen3.circle" : "iphone.gen3.slash.circle"
     GeometryReader { watchGeo in
@@ -65,10 +64,10 @@ struct WatchView: View {
           .frame(width: watchGeo.size.width * 0.9, height: watchGeo.size.height * 0.3, alignment: .center)
           .frame(width: watchGeo.size.width, height: watchGeo.size.height * 0.3, alignment: .center)
           .overlay(ProgressBar(value:
-                                socDouble,
+                                metricVal.carsoc,
                                maxValue: 100,
                                backgroundColor: .clear,
-                               foregroundColor: color(forChargeLevel: socDouble)
+                               foregroundColor: color(forChargeLevel: metricVal.carsoc)
                               )
             .frame(width: watchGeo.size.width * 0.7, height: watchGeo.size.height * 0.25)
             .frame(width: watchGeo.size.width, height: watchGeo.size.height * 0.25)
@@ -88,12 +87,12 @@ struct WatchView: View {
               .opacity(0.9))
         switch carMode {
         case .charging:
-          let text1 = metricVal.charge_etr_full > 0 ? "\(metricVal.charge_etr_full)%" : ""
+          let text1 = metricVal.charge_etr_full > 0 ? "Full" : ""
           let data1 = metricVal.charge_etr_full > 0 ? timeConvert(time: String(metricVal.charge_etr_full)) : ""
-          let text2 = metricVal.charge_limit_soc > 0 ? "\(metricVal.charge_limit_soc)%" : ""
-          let data2 = metricVal.charge_limit_soc > 0 ? timeConvert(time: String(metricVal.charge_etr_soc)) : ""
-          let text3 = metricVal.charge_limit_range > 0 ? "\(metricVal.charge_limit_range)%" : ""
-          let data3 = metricVal.charge_limit_range > 0 ? timeConvert(time: String(metricVal.charge_limit_range)) : ""
+          let text2 = metricVal.charge_limit_range > 0 && metricVal.charge_etr_range > 0 ? "\(metricVal.charge_limit_range)K" : ""
+          let data2 = metricVal.charge_limit_range > 0 && metricVal.charge_etr_range > 0 ? timeConvert(time: String(metricVal.charge_etr_range)) : ""
+          let text3 = metricVal.charge_limit_soc > 0 && metricVal.charge_etr_soc > 0 ? "\(metricVal.charge_limit_soc)%" : ""
+          let data3 = metricVal.charge_limit_soc > 0 && metricVal.charge_etr_soc > 0 ? timeConvert(time: String(metricVal.charge_etr_soc)) : ""
           SubView(
                   Text1: text1, Data1: data1,
                   Text2: text2, Data2: data2,
@@ -104,8 +103,8 @@ struct WatchView: View {
         case .driving:
           SubView(Text1: "PWR", Data1: String(format:"%0.1f",(Float(metricVal.power))),
                   Text2: "ODO", Data2: String(metricVal.odometer),
-                  Text3: "Used", Data3: String(format:"%0.2f",(Float(metricVal.energyused))),
-                  Text4: "Rxed", Data4: String(format:"%0.2f",(Float(metricVal.energyrecd))),
+                  Text3: "Used", Data3: String(format:"%0.2f",(Float(metricVal.energyused)/1000)),
+                  Text4: "Rxed", Data4: String(format:"%0.2f",(Float(metricVal.energyrecd)/1000)),
                   Text5: "Trip", Data5: String(format:"%0.1f",(Float(metricVal.tripmeter)/10)),
                   Text6: "12V", Data6: "\(metricVal.vehicle12v)V")
         default:
